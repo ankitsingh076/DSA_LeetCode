@@ -76,3 +76,51 @@ class Solution
             return count;
         }
 };
+
+
+----------------------------------------------------------------------------------Approach-03 (Using BFS & without creating adjacency list)-------------------------------------------------------------------------------------
+class Solution
+{
+    public:
+        int n;
+        void bfs(vector<bool> &visited, vector<vector< int>> &isConnected, int u)
+        {
+            queue<int> que;
+            que.push(u);
+            visited[u] = true;
+    
+            while (!que.empty())
+            {
+                int u = que.front();
+                que.pop();
+    
+                for (int v = 0; v < n; v++)
+                {
+                    if (!visited[v] && isConnected[u][v])
+                    {
+                        que.push(v);
+                        visited[v] = true;
+                    }
+                }
+            }
+        }
+
+        int findCircleNum(vector<vector < int>> &isConnected)
+        {
+            n = isConnected.size();
+    
+            vector<bool> visited(n, false);
+            int count = 0;
+    
+            for (int i = 0; i < n; i++)
+            {
+                if (!visited[i])
+                {
+                    bfs(visited, isConnected, i);
+                    count++;
+                }
+            }
+    
+            return count;
+        }
+};
